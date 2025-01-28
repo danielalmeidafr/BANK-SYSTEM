@@ -7,7 +7,7 @@ public class UserManager {
     public static Scanner sc = new Scanner(System.in);
     public static List<User> users = new ArrayList<>();
 
-    protected void signUp() {
+    protected User signUp() {
         User user = new User();
 
         System.out.println("Creating an account:");
@@ -55,13 +55,14 @@ public class UserManager {
         if (optionAccountDetails.equalsIgnoreCase("y")) {
             System.out.println("Account created successfully!");
             users.add(user);
+            return user;
         } else {
             System.out.println("Restarting the sign-up process...");
-            signUp();
+            return signUp();
         }
     }
 
-    protected void signIn() {
+    protected User signIn() {
         System.out.println("Enter the account information: ");
 
         System.out.print("Email: ");
@@ -79,16 +80,14 @@ public class UserManager {
 
         if (foundUser != null) {
             System.out.println("Login successful!");
-            accountLoggedIn(foundUser);
+            return foundUser;
         } else {
             System.out.println("Invalid email or password.");
+            return null;
         }
     }
 
-    private void accountLoggedIn(User user) {
-        System.out.println("Hello, " + user.firstName.substring(0, 1).toUpperCase() + user.firstName.substring(1) + "!");
-        System.out.println("Current balance: R$" + user.balance);
-
+    protected void accountLoggedIn(User user) {
         System.out.println("What do you want to do now?");
         System.out.println("1 - DEPOSIT");
         System.out.println("2 - WITHDRAW");
@@ -106,7 +105,7 @@ public class UserManager {
     }
 
     private BigDecimal deposit(User user) {
-        System.out.println("How much do you want to deposit?");
+        System.out.print ("How much do you want to deposit? R$");
         BigDecimal value = sc.nextBigDecimal();
         sc.nextLine();
 
@@ -114,7 +113,7 @@ public class UserManager {
     }
 
     private BigDecimal withdraw(User user) {
-        System.out.println("How much do you want to withdraw?");
+        System.out.println("How much do you want to withdraw? R$");
         BigDecimal value = sc.nextBigDecimal();
         sc.nextLine();
 

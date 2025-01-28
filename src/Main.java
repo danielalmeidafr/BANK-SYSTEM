@@ -5,24 +5,28 @@ public class Main {
     public static UserManager userManager = new UserManager();
 
     public static void main(String[] args) {
+        User loggedInUser = null;
+        int signInOrSignUp = 0;
 
-        int signInOrSignUp;
         System.out.println("------------ BANK ACCOUNT ------------");
         do {
-            System.out.println("Choose one option below: ");
-            System.out.println("1 - SIGN UP");
-            System.out.println("2 - SIGN IN");
-            System.out.println("3 - CLOSE APP");
-            signInOrSignUp = Integer.parseInt(sc.nextLine());
+            if (loggedInUser == null) {
+                System.out.println("Choose one option below: ");
+                System.out.println("1 - SIGN UP");
+                System.out.println("2 - SIGN IN");
+                System.out.println("3 - CLOSE APP");
+                signInOrSignUp = Integer.parseInt(sc.nextLine());
 
-            switch (signInOrSignUp) {
-                case 1 -> userManager.signUp();
-                case 2 -> userManager.signIn();
-                case 3 -> {
+                switch (signInOrSignUp) {
+                    case 1 -> loggedInUser = userManager.signUp();
+                    case 2 -> loggedInUser = userManager.signIn();
+                    case 3 -> System.out.println("Closing application...");
+                    default -> System.out.println("Invalid option. Choose between 1 and 3");
                 }
-                default -> System.out.println("Invalid option. Choose between 1 and 2");
+            } else {
+                System.out.println("Welcome, " + loggedInUser.firstName + "!");
+                userManager.accountLoggedIn(loggedInUser);
             }
         } while (signInOrSignUp != 3);
-
     }
 }
