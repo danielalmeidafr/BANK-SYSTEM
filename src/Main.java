@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner sc = new Scanner(System.in);
-    public static UserManager userManager = new UserManager();
+    public static UserService userService = new UserService();
 
     public static void main(String[] args) {
-        User loggedInUser = null;
-        int signInOrSignUp = 0;
-
         System.out.println("------------ BANK ACCOUNT ------------");
-        do {
-            if (loggedInUser == null) {
+
+        int signInOrSignUp;
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
                 System.out.println("Choose one option below: ");
                 System.out.println("1 - SIGN UP");
                 System.out.println("2 - SIGN IN");
@@ -18,15 +18,19 @@ public class Main {
                 signInOrSignUp = Integer.parseInt(sc.nextLine());
 
                 switch (signInOrSignUp) {
-                    case 1 -> loggedInUser = userManager.signUp();
-                    case 2 -> loggedInUser = userManager.signIn();
-                    case 3 -> System.out.println("Closing application...");
+                    case 1 -> userService.signUp();
+                    case 2 -> userService.signIn();
+                    case 3 -> {
+                        System.out.println("Closing application...");
+                        isRunning = false;
+                    }
                     default -> System.out.println("Invalid option. Choose between 1 and 3");
                 }
-            } else {
-                System.out.println("Welcome, " + loggedInUser.firstName + "!");
-                userManager.accountLoggedIn(loggedInUser);
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+
             }
-        } while (signInOrSignUp != 3);
+        }
     }
 }
