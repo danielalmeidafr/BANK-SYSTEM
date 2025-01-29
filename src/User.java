@@ -3,9 +3,7 @@ import java.math.BigDecimal;
 public class User {
     protected String firstName;
     protected String lastName;
-    /*protected String CPF;
-    protected String dateBirth;
-    protected String phoneNumber;*/
+    protected UserTypeAccount typeAccount;
     protected String email;
     protected String password;
     protected BigDecimal balance;
