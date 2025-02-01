@@ -72,7 +72,7 @@ public class BankService {
         return user.balance;
     }
 
-    public void transfer(User user) {
+    protected void transfer(User user) {
         if (user.balance.compareTo(new BigDecimal(0)) == 0) {
             System.out.println("Insufficient balance.");
             return;
